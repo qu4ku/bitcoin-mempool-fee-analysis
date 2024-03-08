@@ -1,0 +1,58 @@
+* Bitcoin Mempool Fee Analysis
+Getting information by running our own node (pruned signet).
+
+* Install and Run a Pruned Bitcoin Core Node on Ubuntu
+For Ubuntu (or any similar Linux distribution), follow these concise steps to install and run a Bitcoin Core node in pruned mode, specifically for the Signet test network, without downloading the entire blockchain.
+
+** Install Dependencies
+Open a terminal and run:
+
+#+begin_src bash
+sudo apt-get update
+sudo apt-get install build-essential libtool autotools-dev automake pkg-config bsdmainutils python3
+sudo apt-get install libssl-dev libevent-dev libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-test-dev libboost-thread-dev
+#+end_src
+
+** Download Bitcoin Core
+Check the latest release version of Bitcoin Core suitable for Linux on Bitcoin Core's releases page on GitHub. Download and extract it with:
+
+#+begin_src bash
+wget https://bitcoincore.org/bin/bitcoin-core-<version>/bitcoin-<version>-x86_64-linux-gnu.tar.gz
+tar -xzvf bitcoin-<version>-x86_64-linux-gnu.tar.gz
+#+end_src
+
+Replace <version> with the latest version number.
+
+** Install
+Navigate to the extracted directory and install:
+
+#+begin_src bash
+sudo install -m 0755 -o root -g root -t /usr/local/bin bitcoin-<version>/bin/*
+#+end_src
+
+** Configure Bitcoin Core
+Create the Bitcoin data directory and the configuration file:
+
+#+begin_src bash
+mkdir ~/.bitcoin
+nano ~/.bitcoin/bitcoin.conf
+#+end_src
+
+Add the following lines to the bitcoin.conf file:
+
+#+begin_src makefile
+signet=1
+prune=550 # You can adjust the prune size as needed, minimum 550
+rpcuser=rpc_username
+rpcpassword=rpc_password
+#+end_src
+
+** Run Bitcoin Core
+Start Bitcoin Core in daemon mode:
+
+#+begin_src bash
+  bitcoind -daemon
+
+  bitcoin-cli -signet stop
+#+end_src
+
